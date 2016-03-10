@@ -1,28 +1,40 @@
 import numpy as np
+from scipy import optimize
 
 class NeuralNetwork:
-	def __init__(self, w1, w2):
-		self.w1 = w1
-		self.w2 = w2
+	def __init__(self):
+		#Define Hyperparameters
+		self.inputLayerSize = 2
+		self.outputLayerSize = 1
+		self.hiddenLayerSize = 3
+
+		#Weights (parameters)
+		self.w1 = np.random.randn(self.inputLayerSize,self.hiddenLayerSize)
+		self.w2 = np.random.randn(self.hiddenLayerSize,self.outputLayerSize)
 
 	# Forward propogation 
 	def forward(self, X):
-		# Propogate to find z2
-		z2 = []
+		# Propogate forward for z2
+		z2 = np.dot(X, self.w1)
+		z3 = np.dot(z2, self.w2)
+		return z3
 
-		for xRowIndex in range(len(X)):
-			# The row of data
-			row = X[0]
+class Trainer:
+	def __init__(self, nn):
+		self.nn = nn
 
-			# Build the next entry in
-			entry = [row[0] * w1[0][0] + row[1] * w1[1][0] + row[2] * w1[2][0], row[0] * w1[0][1] + row[1] * w1[1][1] + row[2] * w1[2][1]]
+	def train(self, X, y):
+		self.X = X
+		self.y = y
 
-			z2.append(z2)
-
-		return z2
+		# List to store costs
+		self.costs = []
 
 # Create the neural network
-initW1 = []
 nn = NeuralNetwork()
 
-print("Hello")
+# Make test data
+X = np.matrix('50 50')
+
+
+print(nn.forward(X))
